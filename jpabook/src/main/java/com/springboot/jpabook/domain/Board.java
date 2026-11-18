@@ -7,15 +7,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+@Builder
 @AllArgsConstructor // 필드를 가진 생성자
 @NoArgsConstructor  // 기본생성자
 @ToString
 @Getter
 @Setter
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(AuditingEntityListener.class)  // @CreatedDate 있으면 자동생성 꼭 필요
 @Entity
 public class Board {
-    @Id
+    @Id // 기본키(pk), 자동 순번 (auto increment)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; // primaryKey
 
