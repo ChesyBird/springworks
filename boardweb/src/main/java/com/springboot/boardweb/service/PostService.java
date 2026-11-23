@@ -5,6 +5,7 @@ import com.springboot.boardweb.dto.AddPostRequest;
 import com.springboot.boardweb.dto.UpdatePostRequest;
 import com.springboot.boardweb.repository.PostRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,25 +17,27 @@ public class PostService {
     private PostRepository postRepository;
 
     // 글 등록
-    public Post save(AddPostRequest request){
+    public Post save(AddPostRequest request, String username){
         // 게시글이 DB에 저장
-        return postRepository.save(request.toEntity());
+        return postRepository.save(request.toEntity(username));
     }
 
     // 글 목록 조회
     public List<Post> findAll(){
-        return postRepository.findAll();
+        // return postRepository.findAll();    // 오름차순 정렬
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));   //내림차순
     }
 
     // 글 목록 + 검색
     public List<Post> search(String type, String keyword){
+        // keyword == null 이 먼저 와야함(DB쪽) / keyword.isBlank() : 입력폼에 데이터 없음
         if(keyword == null || keyword.isBlank()){
             return findAll();   // 글목록 함수 호출
         }
         keyword = keyword.trim();   // 검색어 공백 제거
 
         return switch (type == null ? "title" : type){
-            case "content" -> postRepository.findByContentContainingOrderByIdDesc(keyword);
+            case "content" -> postRepository.findByContentContainingOrderByIdDesc(keyword); // javascript에서는 => 사용
 
             case "writer" -> postRepository.findByWriterContainingOrderByIdDesc(keyword);
 

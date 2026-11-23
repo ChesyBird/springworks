@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 // 1차 라우팅(도메인)
@@ -22,8 +23,9 @@ public class PostApiController {
     // 글 등록
     // ResponseEntity<> : 반환 객체
     @PostMapping
-    public ResponseEntity<PostResponse> addPost(@RequestBody AddPostRequest request){
-        Post saved = postService.save(request);
+    public ResponseEntity<PostResponse> addPost(@RequestBody AddPostRequest request,
+                                                Principal principal){
+        Post saved = postService.save(request, principal.getName());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new PostResponse(saved));
     }

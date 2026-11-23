@@ -11,7 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Builder
+// @Builder
 @EntityListeners(AuditingEntityListener.class)  // CreatedDate, LastModifiedDate
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,12 +38,12 @@ public class Post {
     private LocalDateTime updatedAt;   // 수정일
 
     // Builder Pattern으로 객체 생성
-//    @Builder
-//    public Post(String title, String content, String writer){
-//        this.title = title;
-//        this.content = content;
-//        this.writer = writer;
-//    }
+    @Builder
+    public Post(String title, String content, String writer){
+        this.title = title;
+        this.content = content;
+        this.writer = writer;
+    }
 
     // 요청 받은 값으로 수정
     public void update(String title, String content){
