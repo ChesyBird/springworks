@@ -10,12 +10,13 @@
     <div class="container d-flex justify-content-end align-items-center gap-2 py-2">
         <th:block th:if="${loginUser == null}">
             <a th:href="@{/login}" class="btn btn-outline-primary btn-sm">로그인</a>
-            <a th:href="@{/signup}" class="btn btn-outline-secondary btn-sm">회원가입</a>
+            <a th:href="@{/signup}" class="btn btn-outline-success btn-sm">회원가입</a>
         </th:block>
     </div>
     <div class="container d-flex justify-content-end align-items-center gap-2 py-2">
         <th:block th:if="${loginUser != null}">
             <span th:text="|${loginUser} 님|">아이디님</span>
+            <a th:if="${isAdmin}" th:href="@{/admin}" class="btn btn-outline-danger btn-sm">관리자</a>
             <form th:action="@{/logout}" method="post" class="m-0">
                 <button type="submit" class="btn btn-outline-secondary btn-sm">로그아웃</button>
             </form>

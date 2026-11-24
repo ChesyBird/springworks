@@ -12,4 +12,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByTitleContainingOrderByIdDesc(String keyword);
     List<Post> findByContentContainingOrderByIdDesc(String keyword);
     List<Post> findByWriterContainingOrderByIdDesc(String keyword);
+
+    // 최신 5개 글 목록
+    List<Post> findTop5ByOrderByIdDesc();
 }

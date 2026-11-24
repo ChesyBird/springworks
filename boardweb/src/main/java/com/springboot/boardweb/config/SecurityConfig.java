@@ -21,6 +21,7 @@ public class SecurityConfig {
                     .requestMatchers("/", "/posts", "/posts/*", "/signup", "/login").permitAll()
                     .requestMatchers("/css/**", "/js/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()   // 나머지는 로그인 필요
         ).formLogin(form -> form
                     .loginPage("/login")    //우리가 만든 로그인 화면
