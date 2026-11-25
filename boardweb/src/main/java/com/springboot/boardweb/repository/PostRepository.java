@@ -15,4 +15,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     // 최신 5개 글 목록
     List<Post> findTop5ByOrderByIdDesc();
+
+    // 유저의 모든 글 삭제
+    void deleteByWriter(String writer);
 }

@@ -11,4 +11,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // 아이디로 회원 조회(Optional : 아이디가 없을 때 null처리)
     Optional<User> findByUsername(String username);
+
 }

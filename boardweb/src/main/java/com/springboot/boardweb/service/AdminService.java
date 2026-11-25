@@ -7,6 +7,7 @@ import com.springboot.boardweb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,4 +36,21 @@ public class AdminService {
     public List<Post> findRecentPosts(){
         return postRepository.findTop5ByOrderByIdDesc();
     }
+
+    // 회원 삭제 + 회원의 글도 함께 삭제
+    @Transactional
+    public void deleteUser(long id, String loginUsername){
+        // 삭제할 회원
+        User user = userRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("not found : " + id));
+        // 관리자 본인은 삭제 불가
+        if(user.getUsername().equals(loginUsername)){
+            throw new IllegalArgumentException("자기 자신은 삭제할 수 없습니다.");
+        }
+        postRepository.deleteByWriter(user.getUsername());
+        // 삭제
+        userRepository.delete(user);    // 회원 삭제
+
+    }
+
 }
